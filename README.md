@@ -6,18 +6,36 @@ Listen Local is a small web app creates a Spotify playlist for you consisting of
 
 ### Install and run local
 
-To run the app on localhost:
+Download the repo and setup the environment:
+```bash
+git clone https://github.com/pgrauman/listen-local-app.git
+cd listen-local-app
+
+# Make and activate environment
+make develop
+source .venv/bin/activate
 ```
+
+Copy `dummy_config.py` to `copy_config.py`. Then fill in your own information (API credentials, app secret key). Don't worry `config.py` is already in `.gitignore`
+
+```bash
+cp dummy_config.py copy_config.py
+vim copy_config.py
+```
+
+Once it's all setup you can launch with the Makefile and visit on your localhost (address displayed on launch)
+
+```bash
+$ make launch-app
 ```
 
 ## Deployment
 
-TBD
-
+Stay tuned
 
 ## Built with
 * [Flask](http://flask.pocoo.org) - Python microframework for Apps
 * [Spotipy](https://github.com/plamere/spotipy) - Python wrapper for Spotify API
 
 ## Ackowledgments
-* Want to thank [Seatgeek](www.seatgeek.com) and [Spotify](www.spotfy.com) for their awesome APIs
+* Thank you to [Seatgeek](www.seatgeek.com) and [Spotify](www.spotfy.com) for their powerful public APIs

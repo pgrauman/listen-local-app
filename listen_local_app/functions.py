@@ -22,41 +22,18 @@ client_id = config.seatgeek_client_id
 
 def process_daterange(daterange):
     '''
-    Process daterange from datepicker input. Splitting into 2 dates and
-    ensuring they are in a compliant format
+    Process daterange from datepicker input.
 
     Args:
-        daterange (str): string with daterange hopefully formatted as 
-            'YYYY-MM-DD to YYYY-MM-DD' or will raise exception
+        daterange (str): string with daterange formatted as 
+            'YYYY-MM-DD to YYYY-MM-DD'
     '''
-    def _valid_date(date):
-        if date is None:
-            return True
-        expr = "^[0-9]{4}-[0-9]{2}-[0-9]{2}"
-        return bool(re.match(expr, date))
-
     daterange = daterange.strip()
     if "to" in daterange:
         date1, date2 = daterange.split(" to ")
     else:
         date1, date2 = (daterange, None)
-
-    if not _valid_date(date1) and _valid_date(date2):
-        raise InvalidDate
-
     return date1, date2
-
-
-def check_valid_zipcode_input(string):
-    '''
-    Check that string is a formatted as a zip code. Retruns bool
-
-    Args:
-        string (str): string to check as zipcode
-    '''
-    expr = "^[0-9]{5}(?:-[0-9]{4})?$"
-    string = string.strip()
-    return bool(re.match(expr, string))
 
 
 def submit_api_request(url):
@@ -200,11 +177,6 @@ def make_spotify_play_button(uri, height=380, width=300):
 
 # Exceptions defined Here
 class NoConcertsFound(Exception):
-    """Raised when no seat geek results are found"""
-    pass
-
-
-class InvalidDate(Exception):
     """Raised when no seat geek results are found"""
     pass
 

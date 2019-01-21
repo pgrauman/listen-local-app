@@ -5,3 +5,5 @@ spotipy
 pandas
 numpy
 setuptools
+flake8
+pep8

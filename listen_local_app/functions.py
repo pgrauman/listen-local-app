@@ -4,14 +4,17 @@
 This file holds the functions necessary to process the data behind the scenes
 '''
 
-from flask import Flask, request
+
 import config
-import requests
 import json
 import pandas as pd
+import requests
+import spotipy
+
+from flask import Flask
+from flask import request
 from numpy import nan
 from spotipy.oauth2 import SpotifyClientCredentials
-import spotipy
 
 
 app = Flask(__name__)

@@ -4,14 +4,24 @@
 This file contains all the code to run the app pages
 '''
 
-from listen_local_app import app
-from flask import render_template, redirect, request, session, make_response
-from listen_local_app.functions import get_local_concerts, get_access_token, make_spotify_play_button, process_daterange, NoConcertsFound  # noqa
-# import spotipy
-import requests
-import json
 import config
+import json
+import requests
+# import spotipy
+
+from flask import make_response
+from flask import redirect
+from flask import render_template
+from flask import request
+from flask import session
+
+from listen_local_app import app
 from listen_local_app.forms import SearchForm
+from listen_local_app.functions import get_access_token
+from listen_local_app.functions import get_local_concerts
+from listen_local_app.functions import make_spotify_play_button
+from listen_local_app.functions import NoConcertsFound
+from listen_local_app.functions import process_daterange
 
 
 app.config.from_object('config')

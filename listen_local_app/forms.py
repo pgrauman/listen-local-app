@@ -1,6 +1,13 @@
+#!/usr/bin/python
+
+'''
+Flask_WTF Forms are defined here for use elsewhere in the app
+'''
+
+import re
+
 from flask_wtf import FlaskForm
 from wtforms import TextField, SubmitField, ValidationError
-import re
 
 
 class SearchForm(FlaskForm):

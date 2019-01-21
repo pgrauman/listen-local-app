@@ -5,13 +5,12 @@ This file contains all the code to run the app pages
 '''
 
 from listen_local_app import app
-from flask import render_template, redirect, request, session, make_response, url_for, flash
-from listen_local_app.functions import get_local_concerts, get_access_token, make_spotify_play_button, process_daterange, NoConcertsFound
-import spotipy
+from flask import render_template, redirect, request, session, make_response
+from listen_local_app.functions import get_local_concerts, get_access_token, make_spotify_play_button, process_daterange, NoConcertsFound  # noqa
+# import spotipy
 import requests
 import json
 import config
-import base64
 from listen_local_app.forms import SearchForm
 
 
@@ -28,7 +27,7 @@ def index():
         session['zipcode'] = form.zipcode.data
         session['daterange'] = form.daterange.data
         callback_url = request.url_root + 'callback'
-        base_url = 'https://accounts.spotify.com/en/authorize?client_id=' + client_id + '&response_type=code&redirect_uri=' + callback_url + '&scope=user-read-email%20playlist-read-private%20user-follow-read%20user-library-read%20user-top-read%20playlist-modify-private%20playlist-modify-public&state=34fFs29kd09'
+        base_url = 'https://accounts.spotify.com/en/authorize?client_id=' + client_id + '&response_type=code&redirect_uri=' + callback_url + '&scope=user-read-email%20playlist-read-private%20user-follow-read%20user-library-read%20user-top-read%20playlist-modify-private%20playlist-modify-public&state=34fFs29kd09'  # noqa
 
         # this is how we set the Cookie when its a Redirect instead of return_response
         # https://stackoverflow.com/questions/12272418/in-flask-set-a-cookie-and-then-re-direct-user
@@ -44,7 +43,6 @@ def process():
     if request.args.get('error'):
         return request.args.get('error')
     code = request.args.get('code')
-    state = request.args.get('state')
     zipcode = session.get('zipcode')
     daterange = session.get('daterange')
     access_token = get_access_token(code)
@@ -79,7 +77,7 @@ def process():
     tracks = df.spotify_top_track_uri.dropna().tolist()
     tracks_url = f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks"
     tracks_post = {"uris": tracks}
-    r_tracks = requests.post(tracks_url, headers=tracks_headers, data=json.dumps(tracks_post))
+    r_tracks = requests.post(tracks_url, headers=tracks_headers, data=json.dumps(tracks_post))  # noqa
 
     # Create listings table from df
     listing_fields = ["date_local", "time_local", "event_title", "performer",

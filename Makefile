@@ -21,6 +21,9 @@ develop: env
 teardown:
 	rm -rf .venv/
 
+flake8:
+	$(WITH_VENV) && flake8 listen_local_app
+
 clean:
 	find . |  grep -E "(__pycache__|\.pyc$\)" | xargs rm -rf
 	rm -rf *.egg-info/

@@ -1,6 +1,5 @@
 from flask_wtf import FlaskForm
 from wtforms import TextField, SubmitField, ValidationError
-import config
 import re
 
 

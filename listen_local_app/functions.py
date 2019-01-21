@@ -4,15 +4,15 @@
 This file holds the functions necessary to process the data behind the scenes
 '''
 
-from flask import Flask, render_template, redirect, request
+from flask import Flask, request
 import config
 import requests
 import json
 import pandas as pd
-from numpy import nan, isnan
+from numpy import nan
 from spotipy.oauth2 import SpotifyClientCredentials
 import spotipy
-import re
+
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -25,7 +25,7 @@ def process_daterange(daterange):
     Process daterange from datepicker input.
 
     Args:
-        daterange (str): string with daterange formatted as 
+        daterange (str): string with daterange formatted as
             'YYYY-MM-DD to YYYY-MM-DD'
     '''
     daterange = daterange.strip()
@@ -96,10 +96,10 @@ def get_local_concerts(zipcode, date1, date2, dist=3, per_page=100):
             d['event_title'] = event['title']
             d['venue_name'] = event['venue']['name']
             d['venue_id'] = event['venue']['id']
-            d['venue_address'] = f"{event['venue']['address']}, {event['venue']['extended_address']}"
+            d['venue_address'] = f"{event['venue']['address']}, {event['venue']['extended_address']}"  # noqa
 
             # # Spotify searching
-            spotify_artist_id, spotify_top_track_id = lookup_spotify_artist_track(sp, d['performer'])
+            spotify_artist_id, spotify_top_track_id = lookup_spotify_artist_track(sp, d['performer'])  # noqa
             d['spotify_artist_id'] = spotify_artist_id
             d['spotify_top_track_id'] = spotify_top_track_id
 
@@ -107,7 +107,7 @@ def get_local_concerts(zipcode, date1, date2, dist=3, per_page=100):
             df_dict[performer['id']] = d
 
     df = pd.DataFrame(df_dict).T
-    df['spotify_top_track_uri'] = df.spotify_top_track_id.dropna().apply(lambda x: f"spotify:track:{x}")
+    df['spotify_top_track_uri'] = df.spotify_top_track_id.dropna().apply(lambda x: f"spotify:track:{x}")  # noqa
     return df
 
 
@@ -134,7 +134,7 @@ def lookup_spotify_artist_track(sp, performer_name):
 def get_access_token(code):
     '''
     Get access token from spotify (second handshake)
-    Code taken from `https://github.com/siquick/mostplayed<https://github.com/siquick/mostplayed/blob/master/mp/functions.py#L113-L133>`_
+    Code taken from `https://github.com/siquick/mostplayed<https://github.com/siquick/mostplayed/blob/master/mp/functions.py#L113-L133>`_  # noqa
 
     Args:
         code (str): code recieved from first spotify handshake
@@ -155,9 +155,9 @@ def get_access_token(code):
         access_token = 'Bearer ' + auth_json['access_token']
         # print(access_token)
         return access_token
-    except Exception as e:
-        print("Something went wrong at the Spotify end - press back and try again")
-        return "Something went wrong at the Spotify end - press back and try again"
+    except Exception:
+        print("Something went wrong at the Spotify end")
+        return "Something went wrong at the Spotify end"
 
 
 def make_spotify_play_button(uri, height=380, width=300):

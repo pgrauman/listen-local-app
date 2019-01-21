@@ -20,7 +20,9 @@ from spotipy.oauth2 import SpotifyClientCredentials
 app = Flask(__name__)
 app.config.from_object('config')
 
-client_id = config.seatgeek_client_id
+spotify_client_id = config.spotify_client_id.decode('utf-8')
+spotify_client_secret = config.spotify_client_secret.decode('utf-8')
+seatgeek_client_id = config.seatgeek_client_id
 
 
 def process_daterange(daterange):
@@ -60,7 +62,8 @@ def get_local_concerts(zipcode, date1, date2, dist=3, per_page=100):
     '''
 
     # Use spotipy for its great support for large volume of requests
-    client_credentials_manager = SpotifyClientCredentials()
+    client_credentials_manager = SpotifyClientCredentials(client_id=spotify_client_id,
+                                                          client_secret=spotify_client_secret)
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
     # Get dates in formate seatgeek likes
@@ -73,7 +76,7 @@ def get_local_concerts(zipcode, date1, date2, dist=3, per_page=100):
     params = {"geoip": zipcode, "type": "concert",
               "per_page": per_page, "range": f"{dist}mi",
               "datetime_local.gte": datetime1, "datetime_local.lte": datetime2}
-    base = f"https://api.seatgeek.com/2/events?client_id={client_id}"
+    base = f"https://api.seatgeek.com/2/events?client_id={seatgeek_client_id}"
     param_str = "&".join([f"{i}={v}" for i, v in params.items()])
     data = submit_api_request(base + "&" + param_str)
 

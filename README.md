@@ -2,6 +2,10 @@
 
 Listen Local is a small web app creates a Spotify playlist for you consisting of all the artists playing near you. Discover shows you might have missed by listening to the top song of everyone playing a show.
 
+## Prerequisites
+* python3
+* virtualenv
+
 ## Getting Started
 
 ### Install and run local

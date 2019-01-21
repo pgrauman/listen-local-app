@@ -1,0 +1,28 @@
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.js"></script>
+</head>
+
+<h1>Listen Local</h1>
+<p>This app will take your local information and make a spotify playlist of all the bands playing near you!</p>
+
+<form action="/do_it" method="post">
+  Zip Code:<br>
+  <input type="text" name="zipcode" value="">
+  <input name="daterange" id="datepick" class="flatpickr flatpickr-input" type="text" placeholder="Select Date.." data-id="datetime" readonly="readonly">
+  <input type="submit" value="Submit">
+</form> 
+
+<p>Your Spotify login information is used to make the playlist, and nothing else</p>
+
+
+<h3>This will be a footer</h3>
+App by @pgrauman (<--link) </br>
+Design by @heyitsjaki (<--link) </br>
+App powered with <a href="https://www.spotify.com/">Spotify</a> and <a href="https://www.seatgeek.com/">Seatgeek</a> APIs
+
+
+<script type="text/javascript">
+  $("#datepick").flatpickr({dateFormat: "Y-m-d", defaultDate: "today", mode: "range"})
+</script>

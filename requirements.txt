@@ -1,0 +1,7 @@
+ipython
+flask
+requests
+spotipy
+pandas
+numpy
+setuptools

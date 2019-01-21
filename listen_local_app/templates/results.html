@@ -1,0 +1,16 @@
+<html>
+
+<body>
+  <h1>Success! Enjoy your playlist</h1>
+  <div class="playlist">
+    {{playlist_html|safe}} 
+  </div>
+  <h2>... and some information on the shows</h2>
+
+  <!-- Make scrollable table with css later -->
+  <!-- https://stackoverflow.com/questions/17808685/table-in-div-with-scrollbar -->
+  <div class="listings-table-frame">
+    {{listings|safe}} 
+  </div>
+</body>
+</html>

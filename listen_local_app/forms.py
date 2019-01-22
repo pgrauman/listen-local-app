@@ -8,13 +8,17 @@ import re
 
 from datetime import datetime
 from flask_wtf import FlaskForm
-from wtforms import TextField, SubmitField, ValidationError
+from wtforms import SelectField
+from wtforms import SubmitField
+from wtforms import TextField
+from wtforms import ValidationError
 
 
 class SearchForm(FlaskForm):
     # csrf = False
     zipcode = TextField("Zipcode")
     daterange = TextField("Date")
+    distance = SelectField('Search Radius', choices=[(str(x), str(x)+'mi') for x in range(1, 51)])
     submit = SubmitField("Send")
 
     def validate_zipcode(form, field):

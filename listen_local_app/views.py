@@ -36,6 +36,7 @@ def index():
     if request.method == 'POST' and form.validate():
         session['zipcode'] = form.zipcode.data
         session['daterange'] = form.daterange.data
+        session['distance'] = form.distance.data
         callback_url = request.url_root + 'callback'
         base_url = 'https://accounts.spotify.com/en/authorize?client_id=' + client_id + '&response_type=code&redirect_uri=' + callback_url + '&scope=user-read-email%20playlist-read-private%20user-follow-read%20user-library-read%20user-top-read%20playlist-modify-private%20playlist-modify-public&state=34fFs29kd09'  # noqa
 
@@ -55,13 +56,14 @@ def process():
     code = request.args.get('code')
     zipcode = session.get('zipcode')
     daterange = session.get('daterange')
+    distance = session.get('distance')
     access_token = get_access_token(code)
 
     date1, date2 = process_daterange(daterange)
 
     # Get Concert information
     try:
-        df = get_local_concerts(zipcode, date1=date1, date2=date2)
+        df = get_local_concerts(zipcode, date1=date1, date2=date2, dist=distance)
     except NoConcertsFound:
         msg = f"We didn't find any concerts near {zipcode} :-("
         return render_template("error.html", error_text=msg)

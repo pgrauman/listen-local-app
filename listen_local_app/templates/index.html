@@ -19,6 +19,8 @@
       {{ form.daterange.label }}<br>
       {{ form.daterange(class_="flatpickr flatpickr-input", id="datepick", readonly="readonly", placeholder="Select Date.." ) }}<br>
       {{ render_errors(form.daterange) }}<br>
+      {{ form.distance.label }}: 
+      {{ form.distance }}<br>
       {{ form.submit }}
  </fieldset>
 </form>

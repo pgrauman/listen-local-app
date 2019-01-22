@@ -6,6 +6,7 @@ Flask_WTF Forms are defined here for use elsewhere in the app
 
 import re
 
+from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms import TextField, SubmitField, ValidationError
 
@@ -29,3 +30,11 @@ class SearchForm(FlaskForm):
             raise ValidationError('Must be a valid date')
 
         # Add check that date is greater than today?
+        today = datetime.now().date()
+        if " to " in field.data:
+            date2 = field.data.split(" to ")[1]
+        else:
+            date2 = field.data
+        date2 = datetime(*[int(x) for x in date2.split("-")]).date()
+        if date2 < today:
+            raise ValidationError("Dates cannot be in the past")

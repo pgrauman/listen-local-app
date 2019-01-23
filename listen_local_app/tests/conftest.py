@@ -1,4 +1,5 @@
-import pytest
+#!/usr/bin/python
+
 from flask import Flask as _Flask
 
 

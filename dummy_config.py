@@ -6,7 +6,7 @@ import base64
 # https://developer.spotify.com
 spotify_client_id = b''
 spotify_client_secret = b''
-spotify_authorization = 'Basic ' + base64.b64encode(spotify_client_id + b':' + spotify_client_secret).decode("utf-8")
+spotify_authorization = 'Basic ' + base64.b64encode(spotify_client_id + b':' + spotify_client_secret).decode("utf-8")  # noqa
 
 # Get a Seatgeek API key
 # https://seatgeek.com/account/develop
@@ -15,4 +15,4 @@ seatgeek_client_id = ''
 # Generate your own key here
 secret_key = b''
 
-debug = False # or true if dev mode
+debug = False  # or true if dev mode

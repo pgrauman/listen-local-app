@@ -1,4 +1,4 @@
-.PHONY: develop teardown env launch-app clean
+.PHONY: develop teardown env launch-app clean test flake8
 
 VENV_DIR = .venv
 WITH_VENV = source $(VENV_DIR)/bin/activate

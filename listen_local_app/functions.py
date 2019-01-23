@@ -41,14 +41,6 @@ def process_daterange(daterange):
     return date1, date2
 
 
-def submit_api_request(url):
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.json()
-    else:
-        raise FailedApiRequestError
-
-
 def get_concert_information(zipcode, date1, date2, dist=3, per_page=100,
                             client_id=seatgeek_client_id):
     '''
@@ -87,6 +79,14 @@ def get_concert_information(zipcode, date1, date2, dist=3, per_page=100,
 
 def build_df_and_get_spotify_info(data):
     '''
+    Take cocert information from the seatgeek API, make a dataframe, and populate
+    with Spotify artist and track infomration
+
+    Args:
+        data (dict): dictionary from seatgeek api response
+
+    Returns:
+        pandas.DataFrame: dataframe with cncert and artist information in it
     '''
 
     # Use spotipy for its great support for large volume of requests

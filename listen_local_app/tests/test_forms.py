@@ -8,14 +8,14 @@ from datetime import timedelta
 from listen_local_app.forms import SearchForm
 
 
-def _make_test_form_input(field, value):
-    data = {'zipcode': '19130', 'daterange': '2019-01-22', 'distance': '1', 'submit': True}
-    data[field] = value
-    return data
-
-
 def _today_shift(delta=0):
     return datetime.now().date() + timedelta(days=delta)
+
+
+def _make_test_form_input(field, value):
+    data = {'zipcode': '19130', 'daterange': _today_shift(), 'distance': '1', 'submit': True}
+    data[field] = value
+    return data
 
 
 # Test zipcode form intput validation code

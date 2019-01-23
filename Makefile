@@ -31,3 +31,4 @@ clean:
 	find . |  grep -E "(__pycache__|\.pyc$\)" | xargs rm -rf
 	rm -rf *.egg-info/
 	rm -rf *.pyc
+	rm -rf .pytest_cache/

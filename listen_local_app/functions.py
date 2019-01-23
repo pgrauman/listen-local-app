@@ -49,9 +49,10 @@ def submit_api_request(url):
         raise FailedApiRequestError
 
 
-def get_local_concerts(zipcode, date1, date2, dist=3, per_page=100):
+def get_concert_information(zipcode, date1, date2, dist=3, per_page=100,
+                            client_id=seatgeek_client_id):
     '''
-    Build Datafrae of concerts and related songs in a range of a given zipcode
+    Fetch concert information from seatgeek
 
     Args:
         zipcode (str): zipcode to search near
@@ -59,13 +60,8 @@ def get_local_concerts(zipcode, date1, date2, dist=3, per_page=100):
         date2 (str): max date of search
         dist (str): distance (mi) around zipcode for search (default 3)
         per_page (int): maximum number of results (default: 100)
+        client_id (str): seatgeek client id (default: from config.py)
     '''
-
-    # Use spotipy for its great support for large volume of requests
-    client_credentials_manager = SpotifyClientCredentials(client_id=spotify_client_id,
-                                                          client_secret=spotify_client_secret)
-    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
-
     # Get dates in formate seatgeek likes
     if not date2:
         date2 = date1
@@ -76,13 +72,27 @@ def get_local_concerts(zipcode, date1, date2, dist=3, per_page=100):
     params = {"geoip": zipcode, "type": "concert",
               "per_page": per_page, "range": f"{dist}mi",
               "datetime_local.gte": datetime1, "datetime_local.lte": datetime2}
-    base = f"https://api.seatgeek.com/2/events?client_id={seatgeek_client_id}"
+    base_url = f"https://api.seatgeek.com/2/events?client_id={client_id}"
     param_str = "&".join([f"{i}={v}" for i, v in params.items()])
-    data = submit_api_request(base + "&" + param_str)
+    response = requests.get(base_url + "&" + param_str)
+    data = response.json()
+    if response.status_code == 200:
+        # If there are no concerts raise exception
+        if len(data['events']) < 1:
+            raise NoConcertsFound
+        return data
+    else:
+        raise FailedApiRequestError
 
-    # If there are no concerts raise exception
-    if len(data['events']) < 1:
-        raise NoConcertsFound
+
+def build_df_and_get_spotify_info(data):
+    '''
+    '''
+
+    # Use spotipy for its great support for large volume of requests
+    client_credentials_manager = SpotifyClientCredentials(client_id=spotify_client_id,
+                                                          client_secret=spotify_client_secret)
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
     # Pull select data fields and put into pandas dataframe
     df_dict = {}

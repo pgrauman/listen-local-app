@@ -17,8 +17,9 @@ from flask import session
 
 from listen_local_app import app
 from listen_local_app.forms import SearchForm
+from listen_local_app.functions import build_df_and_get_spotify_info
 from listen_local_app.functions import get_access_token
-from listen_local_app.functions import get_local_concerts
+from listen_local_app.functions import get_concert_information
 from listen_local_app.functions import make_spotify_play_button
 from listen_local_app.functions import NoConcertsFound
 from listen_local_app.functions import process_daterange
@@ -63,10 +64,12 @@ def process():
 
     # Get Concert information
     try:
-        df = get_local_concerts(zipcode, date1=date1, date2=date2, dist=distance)
+        concert_data = get_concert_information(zipcode, date1=date1, date2=date2, dist=distance)
     except NoConcertsFound:
         msg = f"We didn't find any concerts near {zipcode} :-("
         return render_template("error.html", error_text=msg)
+
+    df = build_df_and_get_spotify_info(concert_data)
 
     # Find out who the user is
     me_headers = {'Authorization': access_token}

@@ -24,6 +24,9 @@ teardown:
 flake8:
 	$(WITH_VENV) && flake8 listen_local_app
 
+test: 
+	$(WITH_VENV) && pytest
+
 clean:
 	find . |  grep -E "(__pycache__|\.pyc$\)" | xargs rm -rf
 	rm -rf *.egg-info/

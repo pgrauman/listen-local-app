@@ -89,9 +89,14 @@ def test_get_concert_information_404(mock_get):
                                 client_id="this_aint_real")
 
 
+@pytest.mark.skip(reason="Test calls out to Spotify API")
 def test_lookup_spotify_artist_track():
+    '''
+    Hope Jay-Z remains the top hit for the search term 'Jay-Z'....
+    '''
     config = pytest.importorskip("config")
     client_credentials_manager = SpotifyClientCredentials(client_id=config.spotify_client_id.decode('utf-8'),  # noqa
                                                           client_secret=config.spotify_client_secret.decode('utf-8'))  # noqa
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
-    print(lookup_spotify_artist_track(sp, "Jay-Z"))
+    artist_id, track_id = lookup_spotify_artist_track(sp, "Jay-Z")
+    assert artist_id == '3nFkdlSjzX9mRTtwJOzDYB'

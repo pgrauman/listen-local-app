@@ -188,7 +188,7 @@ def make_spotify_play_button(uri, height=380, width=300):
     uri2url = "/".join(uri.split(":")[1:])
     return (f'<iframe src="https://open.spotify.com/embed/{uri2url}"'
             f' width="{width}" height="{height}" frameborder="0"'
-            ' allowtransparency="true" allow="encrypted-media"></iframe>')
+            ' allowtransparency="true" allow="encrypted-media" class="mx-0"></iframe>')
 
 
 # Exceptions defined Here

@@ -102,6 +102,7 @@ def process():
                            "Genre(s)", "Venue", "Address"]
 
     listings_html = listings_df.to_html(index=False, classes=["dataframe", "text-left"])
+    listings_html = listings_html.replace('border="1"', '')
     return render_template("results.html",
-                           playlist_html=make_spotify_play_button(playlist_uri),
+                           playlist_html=make_spotify_play_button(playlist_uri, width="100%"),
                            listings=listings_html)

@@ -1,0 +1,109 @@
+body, html {
+    margin: 0;
+    color: #fff;
+    background-color: #000;
+    /* The image used */
+    /*background-image: url({{ url_for('static', filename='cover.jpg') }});*/
+    /* Full height */
+    height: 100%; 
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Quicksand', sans-serif;;
+}
+
+a {
+    color: red !important;
+}
+
+a:hover{
+    color: rgb(255, 136, 136) !important;
+    text-decoration: none;
+}
+
+.heading {
+    font-family: 'Major Mono Display', monospace !important;
+}
+
+.mainicon {
+    transition: 0.70s;
+    -webkit-transition: 0.70s;
+    -moz-transition: 0.70s;
+    -ms-transition: 0.70s;
+    -o-transition: 0.70s;
+    font-size: 50px;
+    display: block;
+    height: 76px;
+    width: 76px;
+    border-radius: 38px;
+    background-color: red;
+    line-height: 50px;
+    padding: 11px 11px 11px 12px;
+}
+
+.mainicon:hover {
+    transition: 0.70s;
+    -webkit-transition: 0.70s;
+    -moz-transition: 0.70s;
+    -ms-transition: 0.70s;
+    -o-transition: 0.70s;
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);  
+}
+
+#appbody {
+    background: rgba(0,0,0,0.75);
+    min-height: 500px;
+    border-radius: 5px;
+}
+
+#appbody p {
+    margin: .5rem 0;
+}
+
+hr {
+    border-color: rgba(255,255,255,0.5);
+}
+
+.btn-primary {
+    background-color: red !important;
+    background-image: none !important;
+    border: 0px !important;
+}
+
+.btn-primary:hover {
+    background-color: rgb(161, 0, 0) !important;
+    background-image: none !important;
+    border: 0px !important;
+}
+
+.dataframe {
+    display:block;
+    width: 100%;
+    font-size: 11px;
+    overflow: scroll;
+}
+
+tr {
+    border-bottom: 1px solid rgba(255,255,255,0.25)
+}
+
+tr:nth-child(odd) {
+    background-color: rgba(0,0,0,0.3);
+}
+
+.tableheading {
+font-size: 13px;
+    font-weight:800 !important;
+    text-transform: uppercase;
+    background-color: transparent !important;
+}
+
+hr {
+    border-color: rgba(255,255,255,0.5);
+}

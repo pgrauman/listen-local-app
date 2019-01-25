@@ -1,16 +1,15 @@
-<html>
+{% extends "layout.html" %}
 
-<body>
-  <h1>Success! Enjoy your playlist</h1>
-  <div class="playlist">
+{% block content %}
+<h3 class="mt-5 mb-4">Success! <br class="d-auto d-xl-none d-lg-none">Enjoy your playlist</h3>
+<div class="playlist">
     {{playlist_html|safe}} 
-  </div>
-  <h2>... and some information on the shows</h2>
-
-  <!-- Make scrollable table with css later -->
-  <!-- https://stackoverflow.com/questions/17808685/table-in-div-with-scrollbar -->
-  <div class="listings-table-frame">
+</div>
+<div class="mx-4 my-5 px-4">
+    <h3 class="text-center mb-5">... and some information on the shows</h3>
+</div>
+<div class="mx-1 mx-md-3 mx-lg-3 mx-xl-3">
     {{listings|safe}} 
-  </div>
-</body>
-</html>
+</div>
+
+{% endblock %}

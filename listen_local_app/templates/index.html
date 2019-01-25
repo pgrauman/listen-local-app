@@ -1,39 +1,17 @@
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.js"></script>
-</head>
+{% extends "layout.html" %}
 
-<h1>Listen Local</h1>
-<p>This app will take your local information and make a spotify playlist of all the bands playing near you!</p>
+{% block content %}
+<P>This app takes your zip code and makes a spotify playlist of all the bands playing near you!</P>
 
 {% from "_formhelpers.html" import render_errors %}
-<form action = "/" method = post>
- <fieldset>
-    <legend></legend>
-      <!-- {{ form.hidden_tag() }} -->
+<form action = "/" method = post class="form-inline w-100 justify-content-center align-items-center my-4">
       {{ form.csrf_token }}
-      {{ form.zipcode.label }}<br>
-      {{ form.zipcode }}<br>
+      {{ form.zipcode(class_="form-control m-2") }}
+      {{ form.daterange(class_="flatpickr flatpickr-input form-control m-2", id="datepick", readonly="readonly", placeholder="Select Date.." ) }}
+      {{ form.distance }}
       {{ render_errors(form.zipcode) }}<br>
-      {{ form.daterange.label }}<br>
-      {{ form.daterange(class_="flatpickr flatpickr-input", id="datepick", readonly="readonly", placeholder="Select Date.." ) }}<br>
       {{ render_errors(form.daterange) }}<br>
-      {{ form.distance.label }}: 
-      {{ form.distance }}<br>
-      {{ form.submit }}
- </fieldset>
+      {{ form.submit(class_="btn btn-primary m-2", value="submit") }}
 </form>
-
-<p>Your Spotify login information is used to make the playlist, and nothing else</p>
-
-
-<h3>This will be a footer</h3>
-App by @pgrauman (<--link) </br>
-Design by @heyitsjaki (<--link) </br>
-App powered with <a href="https://www.spotify.com/">Spotify</a> and <a href="https://www.seatgeek.com/">Seatgeek</a> APIs
-
-
-<script type="text/javascript">
-  $("#datepick").flatpickr({dateFormat: "Y-m-d", defaultDate: "today", mode: "range"})
-</script>
+</form>
+{% endblock %}

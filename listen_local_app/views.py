@@ -101,6 +101,7 @@ def process():
     listings_df.columns = ["Date", "Time", "Event", "Performer",
                            "Genre(s)", "Venue", "Address"]
 
+    listings_html = listings_df.to_html(index=False, classes=["dataframe", "text-left"])
     return render_template("results.html",
                            playlist_html=make_spotify_play_button(playlist_uri),
-                           listings=listings_df.to_html(index=False, classes=["dataframe", "text-left"]))
+                           listings=listings_html)

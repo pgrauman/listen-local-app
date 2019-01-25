@@ -4,3 +4,4 @@ __pycache__
 .safe_venv/
 /config.py
 *.egg-info
+*.zip

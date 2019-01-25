@@ -32,3 +32,6 @@ clean:
 	rm -rf *.egg-info/
 	rm -rf *.pyc
 	rm -rf .pytest_cache/
+
+aws-eb-prep:
+	zip listen-local-app.zip requirements.txt application.py listen_local_app config.py

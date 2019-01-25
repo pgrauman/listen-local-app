@@ -35,7 +35,14 @@ $ make launch-app
 
 ## Deployment
 
-Stay tuned
+This app was originally launched to a `t2.micro` EC2 instance on AWS using Elastic Beanstalk. To deploy with this method:
+1. Setup your Elastic Beanstalk app for python 3.6.  
+2. Package app using `make aws-eb-prep`; then upload the resulting `listen-local-app.zip` file
+3. For the static files to work you will need to go to Configuration > Software.modify. Under "Static Paths" add "Path: /static/" and "Directory: listen_local_app/static/"
+
+## Design
+
+Front-end web design thanks to [@heyitsjaki](https://www.designbyjaki.com)
 
 ## Built with
 * [Flask](http://flask.pocoo.org) - Python microframework for Apps

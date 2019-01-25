@@ -6,11 +6,11 @@
 {% from "_formhelpers.html" import render_errors %}
 <form action = "/" method = post class="form-inline w-100 justify-content-center align-items-center my-4">
       {{ form.csrf_token }}
+      {{ render_errors(form.zipcode) }}<br>
+      {{ render_errors(form.daterange) }}<br>
       {{ form.zipcode(class_="form-control m-2") }}
       {{ form.daterange(class_="flatpickr flatpickr-input form-control m-2", id="datepick", readonly="readonly", placeholder="Select Date.." ) }}
       {{ form.distance }}
-      {{ render_errors(form.zipcode) }}<br>
-      {{ render_errors(form.daterange) }}<br>
       {{ form.submit(class_="btn btn-primary m-2", value="submit") }}
 </form>
 </form>

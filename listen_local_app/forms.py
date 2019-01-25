@@ -18,7 +18,8 @@ class SearchForm(FlaskForm):
     # csrf = False
     zipcode = StringField("Zipcode")
     daterange = StringField("Date")
-    distance = SelectField('Search Radius', choices=[(str(x), str(x)+'mi') for x in range(1, 51)])
+    distance = SelectField('Search Radius', choices=[(str(x), str(x)+'mi') for x in range(1, 51)],
+                           default=5)
     submit = SubmitField("Send")
 
     def validate_zipcode(form, field):

@@ -33,5 +33,7 @@ clean:
 	rm -rf *.pyc
 	rm -rf .pytest_cache/
 
-aws-eb-prep: clean
+aws-eb-prep: clean config.py
+	sed 's/debug = True/debug = False/' config.py > tmp.py && mv tmp.py config.py
 	zip -r listen-local-app.zip requirements.txt application.py listen_local_app config.py .elasticbeanstalk
+	sed 's/debug = False/debug = True/' config.py > tmp.py && mv tmp.py config.py

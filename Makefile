@@ -5,7 +5,7 @@ WITH_VENV = source $(VENV_DIR)/bin/activate
 
 
 launch-app: env-exist
-	$(WITH_VENV) && python run.py
+	$(WITH_VENV) && python application.py
 
 env: requirements.txt
 	test -d $(VENV_DIR) || virtualenv -p python3 $(VENV_DIR)
@@ -33,5 +33,5 @@ clean:
 	rm -rf *.pyc
 	rm -rf .pytest_cache/
 
-aws-eb-prep:
-	zip listen-local-app.zip requirements.txt application.py listen_local_app config.py
+aws-eb-prep: clean
+	zip -r listen-local-app.zip requirements.txt application.py listen_local_app config.py .elasticbeanstalk

@@ -5,3 +5,8 @@ __pycache__
 /config.py
 *.egg-info
 *.zip
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

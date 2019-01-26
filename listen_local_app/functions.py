@@ -11,6 +11,7 @@ import pandas as pd
 import requests
 import spotipy
 
+from datetime import datetime
 from flask import Flask
 from flask import request
 from numpy import nan
@@ -101,13 +102,13 @@ def build_df_and_get_spotify_info(data):
             d = {}
             d['performer'] = performer['short_name']
             try:
-                d['genre'] = ",".join(x['name'] for x in performer['genres'])
+                d['genre'] = performer['genres'][0]['name']
             except KeyError:
                 d['genre'] = "NA"
             d['datetime_local'] = event['datetime_local']
-            date, time = event['datetime_local'].split("T")
-            d['date_local'] = date
-            d['time_local'] = time
+            dt = datetime.strptime(d['datetime_local'], "%Y-%m-%dT%H:%M:%S")
+            d['date_local'] = dt.strftime("%b %w %Y")
+            d['time_local'] = dt.strftime("%I:%M%p")
             d['event_id'] = event['id']
             d['event_title'] = event['title']
             d['venue_name'] = event['venue']['name']
@@ -188,7 +189,7 @@ def make_spotify_play_button(uri, height=380, width=300):
     uri2url = "/".join(uri.split(":")[1:])
     return (f'<iframe src="https://open.spotify.com/embed/{uri2url}"'
             f' width="{width}" height="{height}" frameborder="0"'
-            ' allowtransparency="true" allow="encrypted-media" class="mx-0"></iframe>')
+            ' allowtransparency="true" allow="encrypted-media" class="p-1"></iframe>')
 
 
 # Exceptions defined Here

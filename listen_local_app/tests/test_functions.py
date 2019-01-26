@@ -34,7 +34,7 @@ def test_make_spotify_play_button():
     uri = 'spotify:album:1DFixLWuPkv3KT3TnV35m3'
     expected = (f'<iframe src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3"'
                 f' width="{width}" height="{height}" frameborder="0"'
-                ' allowtransparency="true" allow="encrypted-media"></iframe>')
+                ' allowtransparency="true" allow="encrypted-media" class="p-1"></iframe>')
 
     assert make_spotify_play_button(uri, height=height, width=width) == expected
 

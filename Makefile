@@ -4,7 +4,7 @@ VENV_DIR = .venv
 WITH_VENV = source $(VENV_DIR)/bin/activate
 
 
-launch-app: env-exist
+launch-app: env-exist config.py
 	$(WITH_VENV) && python application.py
 
 env: requirements.txt

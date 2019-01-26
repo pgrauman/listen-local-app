@@ -107,7 +107,7 @@ def build_df_and_get_spotify_info(data):
                 d['genre'] = "NA"
             d['datetime_local'] = event['datetime_local']
             dt = datetime.strptime(d['datetime_local'], "%Y-%m-%dT%H:%M:%S")
-            d['date_local'] = dt.strftime("%b %w %Y")
+            d['date_local'] = dt.strftime("%b %d %Y")
             d['time_local'] = dt.strftime("%I:%M%p")
             d['event_id'] = event['id']
             d['event_title'] = event['title']

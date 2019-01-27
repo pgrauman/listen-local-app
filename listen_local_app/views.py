@@ -38,6 +38,7 @@ def index():
         session['zipcode'] = form.zipcode.data
         session['daterange'] = form.daterange.data
         session['distance'] = form.distance.data
+        session['force_playlist'] = False
         callback_url = request.url_root + 'callback'
         base_url = 'https://accounts.spotify.com/en/authorize?client_id=' + client_id + '&response_type=code&redirect_uri=' + callback_url + '&scope=playlist-modify-public%20&state=34fFs29kd09'  # noqa
 
@@ -49,6 +50,17 @@ def index():
     return render_template('index.html', form=form)
 
 
+@app.route('/remake_playlist')
+def remake_playlist():
+    session['force_playlist'] = True
+    callback_url = request.url_root + 'callback'
+    base_url = 'https://accounts.spotify.com/en/authorize?client_id=' + client_id + '&response_type=code&redirect_uri=' + callback_url + '&scope=playlist-modify-public%20&state=34fFs29kd09'  # noqa
+    # this is how we set the Cookie when its a Redirect instead of return_response
+    # https://stackoverflow.com/questions/12272418/in-flask-set-a-cookie-and-then-re-direct-user
+    response = make_response(redirect(base_url, 302))
+    return response
+
+
 @app.route('/callback')
 def process():
     # Get varaibles in more usable namespace
@@ -58,6 +70,7 @@ def process():
     zipcode = session.get('zipcode')
     daterange = session.get('daterange')
     distance = session.get('distance')
+    force_make_playlist = session.get('force_playlist')
     access_token = get_access_token(code)
 
     date1, date2 = process_daterange(daterange)
@@ -79,20 +92,33 @@ def process():
 
     # Make a Playlist
     playlist_name = f"Concerts near {zipcode} {daterange}"
-    cp_headers = {'Authorization': access_token, 'Content-Type': 'application/json'}
-    cp_post = {'name': playlist_name, 'public': 'true', 'collaborative': 'false',
-               'description': 'created by protype app'}
-    cp_url = 'https://api.spotify.com/v1/users/' + user_id + '/playlists'
-    r_cp = requests.post(cp_url, headers=cp_headers, data=json.dumps(cp_post))
-    playlist_id = json.loads(r_cp.text)['id']
-    playlist_uri = json.loads(r_cp.text)['uri']
+    gp_headers = {'Authorization': access_token}
+    gp_url = "https://api.spotify.com/v1/users/" + user_id + "/playlists?limit=50"
+    r_gp = requests.get(gp_url, headers=gp_headers)
 
-    # Post Tracks to the playlist
-    tracks_headers = {'Authorization': access_token, 'Content-Type': 'application/json'}
-    tracks = df.spotify_top_track_uri.dropna().tolist()
-    tracks_url = f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks"
-    tracks_post = {"uris": tracks}
-    r_tracks = requests.post(tracks_url, headers=tracks_headers, data=json.dumps(tracks_post))  # noqa
+    # check the playlist doesn't already exist before making it
+    playlist_exists_html = ''
+    existing_playists = {x['name']: x['uri'] for x in json.loads(r_gp.text)['items']}
+    if playlist_name in existing_playists.keys() and not force_make_playlist:
+        playlist_uri = existing_playists[playlist_name]
+        playlist_exists_html = f"Playlist \'{playlist_name}\' already exists. To remake it click <a href='/remake_playlist'> here </a>"  # noqa
+        print('playlist exists')
+    else:
+        print('making playlist')
+        cp_headers = {'Authorization': access_token, 'Content-Type': 'application/json'}
+        cp_post = {'name': playlist_name, 'public': 'true', 'collaborative': 'false',
+                   'description': 'created by protype app'}
+        cp_url = 'https://api.spotify.com/v1/users/' + user_id + '/playlists'
+        r_cp = requests.post(cp_url, headers=cp_headers, data=json.dumps(cp_post))
+        playlist_id = json.loads(r_cp.text)['id']
+        playlist_uri = json.loads(r_cp.text)['uri']
+
+        # Post Tracks to the playlist
+        tracks_headers = {'Authorization': access_token, 'Content-Type': 'application/json'}
+        tracks = df.spotify_top_track_uri.dropna().tolist()
+        tracks_url = f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks"
+        tracks_post = {"uris": tracks}
+        r_tracks = requests.post(tracks_url, headers=tracks_headers, data=json.dumps(tracks_post))  # noqa
 
     # Create listings table from df
     listing_fields = ["date_local", "time_local", "event_title", "performer",
@@ -105,4 +131,5 @@ def process():
     listings_html = listings_html.replace('border="1"', '')
     return render_template("results.html",
                            playlist_html=make_spotify_play_button(playlist_uri, width="100%"),
-                           listings=listings_html)
+                           listings=listings_html,
+                           exists_html=playlist_exists_html)

@@ -39,7 +39,7 @@ def index():
         session['daterange'] = form.daterange.data
         session['distance'] = form.distance.data
         callback_url = request.url_root + 'callback'
-        base_url = 'https://accounts.spotify.com/en/authorize?client_id=' + client_id + '&response_type=code&redirect_uri=' + callback_url + '&scope=playlist-modify-public&state=34fFs29kd09'  # noqa
+        base_url = 'https://accounts.spotify.com/en/authorize?client_id=' + client_id + '&response_type=code&redirect_uri=' + callback_url + '&scope=playlist-modify-public%20&state=34fFs29kd09'  # noqa
 
         # this is how we set the Cookie when its a Redirect instead of return_response
         # https://stackoverflow.com/questions/12272418/in-flask-set-a-cookie-and-then-re-direct-user

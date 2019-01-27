@@ -3,7 +3,7 @@
   <!-- <dt>{{ field.label }} -->
   {% if field.errors %}
     {% for error in field.errors %}
-      <li>{{ error }}</li>
+      <li style="list-style-type: none; color: red;">{{ error }}</li>
     {% endfor %}
   {% endif %}
 {% endmacro %}

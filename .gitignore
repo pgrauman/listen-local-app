@@ -5,6 +5,7 @@ __pycache__
 /config.py
 *.egg-info
 *.zip
+.DS_Store
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
